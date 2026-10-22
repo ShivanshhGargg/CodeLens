@@ -5,7 +5,10 @@ import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/providers/theme-provider"
 import QueryProvider from "@/components/providers/query-provider";
 
-const notoSans = Noto_Sans({subsets:['latin'],variable:'--font-sans'});
+const notoSans = Noto_Sans({
+  subsets: ["latin"],
+  variable: "--font-noto-sans",
+});
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

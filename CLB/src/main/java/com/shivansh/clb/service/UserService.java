@@ -3,11 +3,12 @@ package com.shivansh.clb.service;
 import java.util.Map;
 import java.util.UUID;
 
-import com.shivansh.clb.entity.User;
-import com.shivansh.clb.repository.UserRepository;
 import org.springframework.security.crypto.encrypt.TextEncryptor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.shivansh.clb.entity.User;
+import com.shivansh.clb.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -54,7 +55,4 @@ public class UserService {
         }
         return Long.parseLong(String.valueOf(value));
     }
-
-
-
 }
