@@ -1,25 +1,21 @@
 ---
-
 title: CodeLens
 featured: true
 visible: true
 order: 2
-status: In Development
+status: Completed
 images:
-
-* docs/dashboard.png
-
 ---
 
 # CodeLens
 
-An AI-powered codebase explorer that helps developers understand unfamiliar GitHub repositories faster.
+An AI-powered codebase explorer that helps developers understand unfamiliar GitHub repositories through intelligent code analysis and contextual explanations.
 
-CodeLens connects to GitHub, lets developers select a repository or file, and uses AI to explain the code, structure, and functionality in a way that is easier to understand and navigate.
+CodeLens integrates with GitHub to let developers explore repositories, navigate files, and ask questions about their codebase. Using AI-powered chat and Retrieval-Augmented Generation (RAG), it provides context-aware explanations grounded in the actual source code, with file and line references to make understanding and debugging easier.
 
 ## Technologies
 
-React, TypeScript, JavaScript, AI, GitHub API
+React, TypeScript, Next.js, Java, Spring Boot, PostgreSQL, pgvector, Gemini API, GitHub API, OAuth 2.0, RAG, Vector Embeddings
 
 ## Links
 
