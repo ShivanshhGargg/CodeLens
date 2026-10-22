@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class GithubOAuth2UserService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
-
     private final UserService userService;
     private final DefaultOAuth2UserService delegate = new DefaultOAuth2UserService();
 
@@ -22,11 +21,11 @@ public class GithubOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         OAuth2User githubUser = delegate.loadUser(userRequest);
 
         String accessToken = userRequest.getAccessToken().getTokenValue();
-        String scopes = userRequest.getAccessToken().getScopes() != null ?
-                String.join(",", userRequest.getAccessToken().getScopes()) :"read:user,repo";
+        String scopes = userRequest.getAccessToken().getScopes() != null
+                ? String.join(",", userRequest.getAccessToken().getScopes())
+                : "read:user,repo";
 
-        User user = userService.upsertFromGitHub(githubUser.getAttributes(),accessToken,scopes);
-        return new AppUserPrincipal(user,githubUser.getAttributes());
+        User user = userService.upsertFromGitHub(githubUser.getAttributes(), accessToken, scopes);
+        return new AppUserPrincipal(user, githubUser.getAttributes());
     }
-
 }

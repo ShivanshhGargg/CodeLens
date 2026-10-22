@@ -17,8 +17,9 @@ public class AppUserPrincipal implements OAuth2User {
 
     public AppUserPrincipal(User user, Map<String, Object> attributes) {
         this.user = Objects.requireNonNull(user, "user cannot be null");
-        this.attributes = Map.copyOf(
-                Objects.requireNonNull(attributes, "attributes cannot be null")
+        this.attributes = Objects.requireNonNull(
+                attributes,
+                "attributes cannot be null"
         );
     }
 

@@ -22,41 +22,42 @@ import lombok.RequiredArgsConstructor;
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
+    private final GithubOAuth2UserService gitHubOAuth2UserService;
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http,
-                                                    AuthenticationSuccessHandler OAuth2SuccessHandler,
-                                                   AuthenticationFailureHandler OAuth2FailureHandler) throws Exception {
+    SecurityFilterChain securityFilterChain(
+            HttpSecurity http,
+            AuthenticationSuccessHandler oauth2SuccessHandler,
+            AuthenticationFailureHandler oauth2FailureHandler) throws Exception {
         http
                 .cors(Customizer.withDefaults())
                 .csrf(csrf -> csrf.disable())
-                .sessionManagement(session ->
-                        session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
+                .sessionManagement(session -> session
+                        .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/auth/login-url",
-                                        "/oauth2/**",
-                                        "login/oauth2/**",
-                                        "/error")
+                        .requestMatchers(
+                                "/api/auth/login-url",
+                                "/oauth2/**",
+                                "/login/oauth2/**",
+                                "/error")
                         .permitAll()
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers("/api/**").authenticated()
                         .anyRequest().permitAll())
-                .exceptionHandling(ex -> ex.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))
+                .exceptionHandling(ex -> ex
+                        .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))
                 .oauth2Login(oauth -> oauth
                         .userInfoEndpoint(userInfo -> userInfo
-                        .userService(GithubOAuth2UserService)
-                        .successHandler(OAuth2SuccessHandler)
-                        .failureHandler(OAuth2FailureHandler))
-                )
+                                .userService(gitHubOAuth2UserService))
+                        .successHandler(oauth2SuccessHandler)
+                        .failureHandler(oauth2FailureHandler))
                 .logout(logout -> logout
                         .logoutUrl("/api/auth/logout")
                         .logoutSuccessHandler((request, response, authentication) ->
                                 response.setStatus(HttpStatus.NO_CONTENT.value()))
                         .invalidateHttpSession(true)
                         .clearAuthentication(true)
-                        .deleteCookies("DEVPILOT_SESSION"));
-        ;
-
+                        .deleteCookies("CodeLens_SESSION"));
 
         return http.build();
     }
